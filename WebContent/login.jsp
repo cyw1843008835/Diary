@@ -96,7 +96,7 @@ if(request.getAttribute("user")==null){
         &nbsp;&nbsp;&nbsp;&nbsp;
         <button class="btn btn-large btn-primary" type="button" >重置</button>
 
-<p align="center" style="padding-top: 15px;">版权所有  java1234 <a href="http://www.java1234.com" target="_blank">http://www.java1234.com</a></p>
+<p align="center" style="padding-top: 15px;">版权所有  java1234 <a href="http://www.java.com" target="_blank">http://www.java.com</a></p>
       </form>
 </div>
 </body>

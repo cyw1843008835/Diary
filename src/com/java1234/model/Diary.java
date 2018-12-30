@@ -1,50 +1,76 @@
 package com.java1234.model;
+
+import java.util.Date;
 /*
 * @author chenyanwei
-* @date 9 Dec 2018 20:16:43
+* @date 30 Dec 2018 11:06:41
 * @version 1.0
 */
 
-import java.util.Date;
-
-import javafx.util.converter.DateStringConverter;
-
 public class Diary {
-	private int DiaryId;
+
+	private int diaryId;
 	private String title;
 	private String content;
-	private int typeId=-1;
+	private int typeId = -1;
 	private Date releaseDate;
+	private String releaseDateStr;
+	private int diaryCount;
+
 	public int getDiaryId() {
-		return DiaryId;
+		return diaryId;
 	}
+
 	public void setDiaryId(int diaryId) {
-		DiaryId = diaryId;
+		this.diaryId = diaryId;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
+
 	public int getTypeId() {
 		return typeId;
 	}
+
 	public void setTypeId(int typeId) {
 		this.typeId = typeId;
 	}
+
 	public Date getReleaseDate() {
 		return releaseDate;
 	}
+
 	public void setReleaseDate(Date releaseDate) {
 		this.releaseDate = releaseDate;
 	}
-	
+
+	public String getReleaseDateStr() {
+		return releaseDateStr;
+	}
+
+	public void setReleaseDateStr(String releaseDateStr) {
+		this.releaseDateStr = releaseDateStr;
+	}
+
+	public int getDiaryCount() {
+		return diaryCount;
+	}
+
+	public void setDiaryCount(int diaryCount) {
+		this.diaryCount = diaryCount;
+	}
 
 }

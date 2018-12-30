@@ -20,3 +20,14 @@
 #test{
 	color:red;
 }
+.data_list .datas{
+	padding: 5px;
+}
+
+.data_list .datas ul {
+	list-style-type: none;
+}
+
+.data_list .datas ul li {
+	margin-top: 10px;
+}

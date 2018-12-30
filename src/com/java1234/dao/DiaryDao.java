@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.ConfigurationException;
-
 import com.java1234.model.Diary;
 import com.java1234.model.PageBean;
 import com.java1234.util.DateUtil;
@@ -19,16 +17,16 @@ import com.java1234.util.DateUtil;
 */
 public class DiaryDao {
 
-	public static List<Diary> diaryList(Connection con,PageBean pageBean) throws Exception {
+	public static List<Diary> diaryList(Connection con, PageBean pageBean) throws Exception {
 
 		List<Diary> diaryList = new ArrayList<Diary>();
 		StringBuffer sb = new StringBuffer(
 				"select * from t_diary as t1,t_diaryType as t2 where t1.typeId=t2.diaryTypeId");
 		sb.append(" order by t1.releaseDate desc");
-		if(pageBean!=null) {
-			sb.append(" limit "+pageBean.getStart()+","+pageBean.getPageSize());
+		if (pageBean != null) {
+			sb.append(" limit " + pageBean.getStart() + "," + pageBean.getPageSize());
 		}
-		
+
 		PreparedStatement ps = con.prepareStatement(sb.toString());
 		ResultSet rSet = ps.executeQuery();
 		while (rSet.next()) {
@@ -52,6 +50,22 @@ public class DiaryDao {
 		} else {
 			return 0;
 		}
+
+	}
+
+	public List<Diary> releaseDateStrList(Connection con) throws Exception {
+		String sql = "select date_format(releaseDate,'%YÄê%mÔÂ') as releaseDateStr, count(*) as diaryCount "
+				+ "from t_diary " + "group by releaseDateStr " + "order by releaseDateStr desc";
+		PreparedStatement pStatement = con.prepareStatement(sql);
+		ResultSet rSet = pStatement.executeQuery();
+		List<Diary> releaseDateList = new ArrayList<Diary>();
+		while (rSet.next()) {
+			Diary diary = new Diary();
+			diary.setReleaseDateStr(rSet.getString("releaseDateStr"));
+			diary.setDiaryCount(rSet.getInt("diaryCount"));
+			releaseDateList.add(diary);
+		}
+		return releaseDateList;
 
 	}
 }

@@ -51,9 +51,22 @@
 			</div>
 			<div class="data_list">
 				<div class="data_list_title"><img alt="" src="${pageContext.request.contextPath}/images/byType_icon.png">按日志类别</div>
+				<div class="datas">
+					<ul>
+						<c:forEach var="diaryTypeCount" items="${diaryTypeCountList }">
+							<li><span><a href="#">${diaryTypeCount.typeName }(${diaryTypeCount.diaryCount })</a></span></li>
+						</c:forEach>
+					</ul>
+				</div>
 			</div>
 			<div class="data_list">
 				<div class="data_list_title"><img alt="" src="${pageContext.request.contextPath}/images/byDate_icon.png">按日志日期</div>
+				<div class="datas">
+					<ul>
+						<c:forEach var="releaseDateList" items="${releaseDateList }">
+							<li><span><a href="#">${releaseDateList.releaseDateStr }(${releaseDateList.diaryCount })</a></span></li>
+						</c:forEach>
+					</ul>
 			</div>
 		</div>
 		
