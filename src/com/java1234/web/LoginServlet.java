@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.java1234.dao.UserDao;
 import com.java1234.model.User;
-import com.java1234.util.DbUtil;
+import com.java1234.util.JdbcUtil;
 import com.java1234.util.MD5Util;
 
 /*
@@ -44,10 +44,10 @@ public class LoginServlet extends HttpServlet {
 		User user = null;
 		HttpSession session = request.getSession();
 		String userName = request.getParameter("userName");
-		String password=request.getParameter("password");
-		String remember=request.getParameter("remember");
+		String password = request.getParameter("password");
+		String remember = request.getParameter("remember");
 		try {
-			String MD5Password=MD5Util.EncoderPwdByMd5("password");
+			String MD5Password = MD5Util.EncoderPwdByMd5("password");
 			user = new User(userName, MD5Password);
 		} catch (NoSuchAlgorithmException e1) {
 			// TODO Auto-generated catch block
@@ -55,15 +55,15 @@ public class LoginServlet extends HttpServlet {
 		}
 
 		try {
-			con = DbUtil.getCon();
+			con = JdbcUtil.getConnection();
 			currentUser = UserDao.login(con, user);
 			if (currentUser == null) {
 				session.setAttribute("error", "用户名或密码错误");
 				session.setAttribute("user", user);
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 			} else {
-				if("remember-me".equals(remember)) {
-					rememberMe(userName,password,response);
+				if ("remember-me".equals(remember)) {
+					rememberMe(userName, password, response);
 				}
 				session.setAttribute("currentUser", currentUser);
 				request.getRequestDispatcher("main").forward(request, response);
@@ -73,7 +73,7 @@ public class LoginServlet extends HttpServlet {
 			e.printStackTrace();
 		} finally {
 			try {
-				DbUtil.closeCon(con);
+				JdbcUtil.release(con, null, null);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -81,10 +81,9 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
-
-	private static void rememberMe(String userName,String password,HttpServletResponse response) {
-		Cookie user=new Cookie("user", userName+"-"+password);
-		user.setMaxAge(1*60*60*7);
+	private static void rememberMe(String userName, String password, HttpServletResponse response) {
+		Cookie user = new Cookie("user", userName + "-" + password);
+		user.setMaxAge(1 * 60 * 60 * 7);
 		response.addCookie(user);
 	}
 }

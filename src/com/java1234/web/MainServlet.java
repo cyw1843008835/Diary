@@ -15,7 +15,7 @@ import com.java1234.dao.DiaryDao;
 import com.java1234.dao.DiaryTypeDao;
 import com.java1234.model.Diary;
 import com.java1234.model.PageBean;
-import com.java1234.util.DbUtil;
+import com.java1234.util.JdbcUtil;
 import com.java1234.util.PropertiesUtil;
 import com.java1234.util.StringUtil;
 
@@ -53,7 +53,7 @@ public class MainServlet extends HttpServlet {
 		}
 		PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(PropertiesUtil.getValue("pageSize")));
 		try {
-			con = DbUtil.getCon();
+			con = JdbcUtil.getConnection();
 			diaryList = DiaryDao.diaryList(con, pageBean);
 			int total = DiaryDao.diaryCount(con);
 			String pageCode = this.gePagination(total, Integer.parseInt(page),
@@ -71,7 +71,7 @@ public class MainServlet extends HttpServlet {
 		} finally {
 
 			try {
-				DbUtil.closeCon(con);
+				JdbcUtil.release(con, null, null);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

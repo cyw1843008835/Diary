@@ -27,15 +27,11 @@ public class DbUtil {
 		}
 	}
 
-	public void main(String[] args) {
-
-		try {
-			DbUtil.getCon();
-			System.out.println("dbconnected");
-		} catch (Exception e) {
-			System.out.println("dbconnection defeat!");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	/*
+	 * public void main(String[] args) {
+	 * 
+	 * try { DbUtil.getCon(); System.out.println("dbconnected"); } catch (Exception
+	 * e) { System.out.println("dbconnection defeat!"); // TODO Auto-generated catch
+	 * block e.printStackTrace(); } }
+	 */
 }
