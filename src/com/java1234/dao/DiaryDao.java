@@ -17,7 +17,7 @@ import com.java1234.util.DateUtil;
 */
 public class DiaryDao {
 
-	public static List<Diary> diaryList(Connection con, PageBean pageBean) throws Exception {
+	public static List<Diary> diaryList(Connection con, PageBean pageBean, Diary s_diary) throws Exception {
 
 		List<Diary> diaryList = new ArrayList<Diary>();
 		StringBuffer sb = new StringBuffer(
@@ -40,7 +40,7 @@ public class DiaryDao {
 		return diaryList;
 	}
 
-	public static int diaryCount(Connection con) throws Exception {
+	public static int diaryCount(Connection con, Diary s_diary) throws Exception {
 		StringBuffer sb = new StringBuffer(
 				"select count(*) as total from t_diary as t1,t_diaryType as t2 where t1.typeId=t2.diaryTypeId");
 		PreparedStatement ps = con.prepareStatement(sb.toString());

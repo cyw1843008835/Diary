@@ -48,14 +48,25 @@ public class MainServlet extends HttpServlet {
 		Connection con = null;
 		request.setCharacterEncoding("UTF-8");
 		String page = request.getParameter("page");
+		String s_typeId = request.getParameter("s_typeId");
+		String s_releaseDateStr = request.getParameter("s_releaseDateStr");
+		Diary diary = new Diary();
+		if (StringUtil.isNotEmpty(s_typeId)) {
+			diary.setTypeId(Integer.parseInt(s_typeId));
+			session.setAttribute("s_typeId", s_typeId);
+		}
+		if (StringUtil.isNotEmpty(s_releaseDateStr)) {
+			diary.setReleaseDateStr(s_releaseDateStr);
+			session.setAttribute("s_releaseDateStr", s_releaseDateStr);
+		}
 		if (StringUtil.isEmpty(page)) {
 			page = "1";
 		}
 		PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(PropertiesUtil.getValue("pageSize")));
 		try {
 			con = DbUtil.getCon();
-			diaryList = DiaryDao.diaryList(con, pageBean);
-			int total = DiaryDao.diaryCount(con);
+			diaryList = DiaryDao.diaryList(con, pageBean, diary);
+			int total = DiaryDao.diaryCount(con, diary);
 			String pageCode = this.gePagination(total, Integer.parseInt(page),
 					Integer.parseInt(PropertiesUtil.getValue("pageSize")));
 			session.setAttribute("diaryTypeCountList", diaryTypeDao.diaryTypeCountList(con));

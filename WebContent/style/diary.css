@@ -31,3 +31,16 @@
 .data_list .datas ul li {
 	margin-top: 10px;
 }
+.data_list .user_image{
+	text-align: center;
+}
+
+.data_list .user_image img{
+	padding-top:10px;
+	width: 200px;;
+	height: 250px;;
+}
+
+.data_list .nickName , .data_list .userSign{
+	text-align: center;
+}

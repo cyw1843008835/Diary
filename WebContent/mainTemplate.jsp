@@ -34,7 +34,7 @@
 				<div>
 					<form name="myForm" class="navbar-form pull-right" method="post" action="">
 					<input type="text" class="span2" name="s_title" id="s_title" style="margin-top:5px;height:30px" placeholder="往事如烟……"></input>
-					<button type="submit" class="btn" onkedown="if(event.keyCode==13) myForm.submit()"><i class="icon-search"></i>&nbsp;搜索日志</button>
+					<button type="submit" class="btn" onkeydown="if(event.keyCode==13) myForm.submit()"><i class="icon-search"></i>&nbsp;搜索日志</button>
 					</form>
 				</div>
 		</div>
@@ -48,13 +48,16 @@
 		<div class="span3">
 			<div class="data_list">
 				<div class="data_list_title"><img alt="" src="${pageContext.request.contextPath}/images/user_icon.png">个人中心</div>
+			    <div class="user_image"><img  src="${currentUser.imageName }"/></div>
+			    <div class="nickName">${currentUser.nickName}</div>
+			    <div class="userSign">(${currentUser.mood })</div>
 			</div>
 			<div class="data_list">
 				<div class="data_list_title"><img alt="" src="${pageContext.request.contextPath}/images/byType_icon.png">按日志类别</div>
 				<div class="datas">
 					<ul>
 						<c:forEach var="diaryTypeCount" items="${diaryTypeCountList }">
-							<li><span><a href="#">${diaryTypeCount.typeName }(${diaryTypeCount.diaryCount })</a></span></li>
+							<li><span><a href="main?s_typeId=${diaryTypeCount.typeName }">${diaryTypeCount.typeName }(${diaryTypeCount.diaryCount })</a></span></li>
 						</c:forEach>
 					</ul>
 				</div>
@@ -64,7 +67,7 @@
 				<div class="datas">
 					<ul>
 						<c:forEach var="releaseDateList" items="${releaseDateList }">
-							<li><span><a href="#">${releaseDateList.releaseDateStr }(${releaseDateList.diaryCount })</a></span></li>
+							<li><span><a href="main?s_releaseDateStr=${releaseDateList.releaseDateStr }">${releaseDateList.releaseDateStr }(${releaseDateList.diaryCount })</a></span></li>
 						</c:forEach>
 					</ul>
 			</div>
@@ -72,7 +75,7 @@
 		
 	</div>
 </div>
-
+</div>
 </body>
 </html>
 
