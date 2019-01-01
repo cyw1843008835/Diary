@@ -100,8 +100,7 @@ public class MainServlet extends HttpServlet {
 		}
 		PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(PropertiesUtil.getValue("pageSize")));
 		try {
-			con = DbUtil.getCon();
-			System.out.println(diary.getReleaseDateStr());
+			con = JdbcUtil.getConnection();
 			diaryList = DiaryDao.diaryList(con, pageBean, diary);
 			int total = DiaryDao.diaryCount(con, diary);
 
