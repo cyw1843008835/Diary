@@ -32,7 +32,7 @@
 					</ul>
 				</div>
 				<div>
-					<form name="myForm" class="navbar-form pull-right" method="post" action="">
+					<form name="myForm" class="navbar-form pull-right" method="post" action="main?all=true">
 					<input type="text" class="span2" name="s_title" id="s_title" style="margin-top:5px;height:30px" placeholder="往事如烟……"></input>
 					<button type="submit" class="btn" onkeydown="if(event.keyCode==13) myForm.submit()"><i class="icon-search"></i>&nbsp;搜索日志</button>
 					</form>
@@ -57,7 +57,7 @@
 				<div class="datas">
 					<ul>
 						<c:forEach var="diaryTypeCount" items="${diaryTypeCountList }">
-							<li><span><a href="main?s_typeId=${diaryTypeCount.typeName }">${diaryTypeCount.typeName }(${diaryTypeCount.diaryCount })</a></span></li>
+							<li><span><a href="main?s_typeId=${diaryTypeCount.diaryTypeId }">${diaryTypeCount.typeName }(${diaryTypeCount.diaryCount })</a></span></li>
 						</c:forEach>
 					</ul>
 				</div>

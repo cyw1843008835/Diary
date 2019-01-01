@@ -50,23 +50,61 @@ public class MainServlet extends HttpServlet {
 		String page = request.getParameter("page");
 		String s_typeId = request.getParameter("s_typeId");
 		String s_releaseDateStr = request.getParameter("s_releaseDateStr");
+		String all = request.getParameter("all");
+		String s_title = request.getParameter("s_title");
 		Diary diary = new Diary();
-		if (StringUtil.isNotEmpty(s_typeId)) {
-			diary.setTypeId(Integer.parseInt(s_typeId));
-			session.setAttribute("s_typeId", s_typeId);
+		if ("true".equals(all)) {
+			if (StringUtil.isNotEmpty(s_title)) {
+				diary.setTitle(s_title);
+			}
+			session.removeAttribute("s_releaseDateStr");
+			session.removeAttribute("s_typeId");
+			session.setAttribute("s_title", s_title);
+		} else {
+			if (StringUtil.isNotEmpty(s_typeId)) {
+				diary.setTypeId(Integer.parseInt(s_typeId));
+				session.setAttribute("s_typeId", s_typeId);
+				session.removeAttribute("s_releaseDateStr");
+				session.removeAttribute("s_title");
+			}
+			if (StringUtil.isNotEmpty(s_releaseDateStr)) {
+				diary.setReleaseDateStr(s_releaseDateStr);
+				session.setAttribute("s_releaseDateStr", s_releaseDateStr);
+				session.removeAttribute("s_typeId");
+				session.removeAttribute("s_title");
+			}
+			if (StringUtil.isEmpty(s_typeId)) {
+				Object o = session.getAttribute("s_typeId");
+				if (o != null) {
+					diary.setTypeId(Integer.parseInt(o.toString()));
+				}
+			}
+			if (StringUtil.isEmpty(s_releaseDateStr)) {
+				Object o = session.getAttribute("s_releaseDateStr");
+				if (o != null) {
+					diary.setReleaseDateStr(o.toString());
+
+				}
+			}
+			if (StringUtil.isEmpty(s_title)) {
+				Object o = session.getAttribute("s_title");
+				if (o != null) {
+					diary.setTitle(o.toString());
+
+				}
+			}
 		}
-		if (StringUtil.isNotEmpty(s_releaseDateStr)) {
-			diary.setReleaseDateStr(s_releaseDateStr);
-			session.setAttribute("s_releaseDateStr", s_releaseDateStr);
-		}
+
 		if (StringUtil.isEmpty(page)) {
 			page = "1";
 		}
 		PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(PropertiesUtil.getValue("pageSize")));
 		try {
 			con = DbUtil.getCon();
+			System.out.println(diary.getReleaseDateStr());
 			diaryList = DiaryDao.diaryList(con, pageBean, diary);
 			int total = DiaryDao.diaryCount(con, diary);
+
 			String pageCode = this.gePagination(total, Integer.parseInt(page),
 					Integer.parseInt(PropertiesUtil.getValue("pageSize")));
 			session.setAttribute("diaryTypeCountList", diaryTypeDao.diaryTypeCountList(con));
