@@ -88,4 +88,22 @@ public class DiaryDao {
 		return releaseDateList;
 
 	}
+
+	public Diary diaryShow(Connection con, String diaryId) throws Exception {
+		String sql = "select * from t_diary t1,t_diarytype t2  where t1.typeId=t2.diaryTypeId and t1.diaryId=?";
+		PreparedStatement pStatement = con.prepareStatement(sql);
+		pStatement.setString(1, diaryId);
+		ResultSet rSet = pStatement.executeQuery();
+		Diary diary = new Diary();
+		while (rSet.next()) {
+			diary.setDiaryId(rSet.getInt("diaryId"));
+			diary.setTitle(rSet.getString("title"));
+			diary.setContent(rSet.getString("content"));
+			diary.setTypeId(rSet.getInt("typeId"));
+			diary.setTypeName(rSet.getString("typeName"));
+			diary.setReleaseDate(DateUtil.formatString(rSet.getString("releaseDate"), "yyyy-MM-dd HH:mm:ss"));
+		}
+		return diary;
+
+	}
 }
