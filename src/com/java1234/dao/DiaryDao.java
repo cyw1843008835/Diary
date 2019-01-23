@@ -106,4 +106,13 @@ public class DiaryDao {
 		return diary;
 
 	}
+
+	public int diaryAdd(Connection con, Diary diary) throws Exception {
+		String sql = "insert into t_diary values(null,?,?,?,now());";
+		PreparedStatement pStatement = con.prepareStatement(sql);
+		pStatement.setString(1, diary.getTitle());
+		pStatement.setString(2, diary.getContent());
+		pStatement.setInt(3, diary.getTypeId());
+		return pStatement.executeUpdate();
+	}
 }

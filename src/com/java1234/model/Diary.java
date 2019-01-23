@@ -82,4 +82,16 @@ public class Diary {
 		this.typeName = typeName;
 	}
 
+	public Diary() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Diary(String title, String content, int typeId) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.typeId = typeId;
+	}
+
 }

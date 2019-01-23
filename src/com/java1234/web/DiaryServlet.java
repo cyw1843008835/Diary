@@ -40,6 +40,10 @@ public class DiaryServlet extends HttpServlet {
 		String diaryId = request.getParameter("diaryId");
 		if ("show".equals(action)) {
 			diaryShow(request, response, diaryId);
+		} else if ("preSave".equals(action)) {
+			preSave(request, response);
+		} else if ("save".equals(action)) {
+			diarySave(request, response);
 		}
 	}
 
@@ -53,6 +57,44 @@ public class DiaryServlet extends HttpServlet {
 			request.setAttribute("diary", diary);
 			request.setAttribute("mainPage", "./diary/diaryShow.jsp");
 			request.getRequestDispatcher("mainTemplate.jsp").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				JdbcUtil.release(con, null, null);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void preSave(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setAttribute("mainPage", "./diary/diarySave.jsp");
+		request.getRequestDispatcher("mainTemplate.jsp").forward(request, response);
+
+	}
+
+	private void diarySave(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		String typeId = request.getParameter("typeId");
+		Diary diary = new Diary(title, content, Integer.parseInt(typeId));
+
+		Connection con = null;
+		try {
+			con = JdbcUtil.getConnection();
+			int insertNum = diaryDao.diaryAdd(con, diary);
+			if (insertNum < 0 || insertNum == 0) {
+				request.setAttribute("ERROR", "±£´æÊ§°Ü");
+				request.setAttribute("diary", diary);
+				request.setAttribute("mainPage", "./diary/diarySave.jsp");
+				request.getRequestDispatcher("mainTemplate.jsp").forward(request, response);
+			} else if (insertNum > 0) {
+				request.getRequestDispatcher("main?all=true").forward(request, response);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
