@@ -25,8 +25,19 @@ function submitCheck(){
 </script>
 <div class="data_list">
 	<div class="data_list_title">
-		<img src="${pageContext.request.contextPath }/images/diaryType_add_icon.png"/>
-		写日记
+	<c:choose >
+	<c:when test="${diary.diaryId!=null }">
+	     <div>
+		<img src="${pageContext.request.contextPath}/images/diary_type_edit_icon.png"/>
+				修改日记</div>
+		</c:when>
+		<c:otherwise>
+		<div>
+		<img src="${pageContext.request.contextPath}/images/diary_add_icon.png"/>
+				写日记</div>
+		</c:otherwise>
+	</c:choose>
+		
 	</div>
 </div>
 <form action="diary?action=save" method="post" onsubmit="return submitCheck()">
@@ -37,11 +48,12 @@ function submitCheck(){
 		<select id="typeId" name="typeId">
 			<option value="">请选择类别...</option>
 			<c:forEach var="diaryTypeCount" items="${diaryTypeCountList }">
-				<option	value="${diaryTypeCount.diaryTypeId }">${ diaryTypeCount.typeName}</option>
+				<option	value="${diaryTypeCount.diaryTypeId }" ${diaryTypeCount.diaryTypeId==diary.typeId?'selected':''}>${ diaryTypeCount.typeName}</option>
 			</c:forEach>
 		</select>
 	</div>
 	<div>
+	    <input type="hidden" id="diaryId" name="diaryId" value="${diary.diaryId }"/>
 		<input type="submit" class="btn btn-primary" value="保存"/>
 		<button class="btn btn-primary" type="button" onclick="javascript:history.back()">返回</button>
 		<font id="ERROR" color="red">${ERROR}</font>

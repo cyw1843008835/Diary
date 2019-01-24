@@ -94,4 +94,12 @@ public class Diary {
 		this.typeId = typeId;
 	}
 
+	public Diary(int diaryId, String title, String content, int typeId) {
+		super();
+		this.diaryId = diaryId;
+		this.title = title;
+		this.content = content;
+		this.typeId = typeId;
+	}
+
 }

@@ -115,4 +115,22 @@ public class DiaryDao {
 		pStatement.setInt(3, diary.getTypeId());
 		return pStatement.executeUpdate();
 	}
+
+	public int diaryUpdate(Connection con, Diary diary) throws Exception {
+		String sql = "update t_diary set title=?,content=?,TypeId=? where diaryid=?";
+		PreparedStatement preparedStatement = con.prepareStatement(sql);
+		preparedStatement.setString(1, diary.getTitle());
+		preparedStatement.setString(2, diary.getContent());
+		preparedStatement.setInt(3, diary.getTypeId());
+		preparedStatement.setInt(4, diary.getDiaryId());
+		return preparedStatement.executeUpdate();
+
+	}
+
+	public int diaryDelete(Connection con, int diaryId) throws Exception {
+		String sql = "delete from t_diary where diaryId=" + diaryId;
+		PreparedStatement preparedStatement = con.prepareStatement(sql);
+		return preparedStatement.executeUpdate();
+
+	}
 }
