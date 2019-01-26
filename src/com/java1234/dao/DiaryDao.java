@@ -133,4 +133,15 @@ public class DiaryDao {
 		return preparedStatement.executeUpdate();
 
 	}
+
+	public boolean hasDiaryOfThisType(Connection con, int typeId) throws Exception {
+		String sql = "select * from t_diary where typeId=" + typeId;
+		PreparedStatement preparedStatemsent = con.prepareStatement(sql);
+		ResultSet resultSet = preparedStatemsent.executeQuery();
+		if (resultSet.next()) {
+			return true;
+		}
+		return false;
+
+	}
 }

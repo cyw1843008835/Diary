@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.java1234.dao.DiaryDao;
 import com.java1234.dao.DiaryTypeDao;
 import com.java1234.model.DiaryType;
 import com.java1234.util.JdbcUtil;
@@ -27,6 +28,7 @@ public class DiaryTypeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	DiaryTypeDao diaryTypeDao = new DiaryTypeDao();
 	Connection con = null;
+	DiaryDao diaryDao = new DiaryDao();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -46,6 +48,8 @@ public class DiaryTypeServlet extends HttpServlet {
 			diaryTypeShow(request, response);
 		} else if ("save".equals(action)) {
 			diaryTypeSave(request, response);
+		} else if ("delete".equals(action)) {
+			diaryTypeDelete(request, response);
 		}
 	}
 
@@ -117,6 +121,26 @@ public class DiaryTypeServlet extends HttpServlet {
 		} finally {
 			JdbcUtil.release(con, null, null);
 		}
+	}
+
+	public void diaryTypeDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String diaryTypeId = request.getParameter("diaryTypeId");
+
+		try {
+			con = JdbcUtil.getConnection();
+			if (diaryDao.hasDiaryOfThisType(con, Integer.parseInt(diaryTypeId))) {
+				request.setAttribute("error", "该类别下有日志，不能删除该类别！");
+			} else {
+				diaryTypeDao.diaryTypeDelete(con, diaryTypeId);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.release(con, null, null);
+		}
+		request.getRequestDispatcher("diaryType?action=diaryTypeList").forward(request, response);
 	}
 
 }

@@ -76,4 +76,12 @@ public class DiaryTypeDao {
 		return diaryType;
 
 	}
+
+	public void diaryTypeDelete(Connection con, String diaryTypeId) throws Exception {
+		String sql = "delete from t_diaryType where diaryTypeId=" + diaryTypeId;
+		PreparedStatement preparedStatement = con.prepareStatement(sql);
+		preparedStatement.executeUpdate();
+
+	}
+
 }
