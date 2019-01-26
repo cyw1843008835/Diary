@@ -3,10 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <div class="data_list">
 	<div class="data_list_title">
-	<img ${pageContext.request.contextPath}/images/list_icon.png/>
+	<img src="${pageContext.request.contextPath}/images/list_icon.png"/>
 	日记类别列表
 	<span class="diaryType_add">
-			<button class="btn btn-mini btn-success" type="button">添加日志类别</button>
+			<button class="btn btn-mini btn-success" type="button" onclick="javascript:window.location='diaryType?action=preSave'">添加日志类别</button>
 		</span>
 	</div>
 	<div>
@@ -20,7 +20,10 @@
 			<tr>
 				<td>${diaryTypeList.diaryTypeId}</td>
 				<td>${diaryTypeList.typeName}</td>
-				<td><button class="btn btn-mini btn-info" type="button">修改</button>&nbsp;<button class="btn btn-mini btn-danger" type="button">删除</button></td>
+				<td>
+				<button class="btn btn-mini btn-info" type="button"onclick="javascript:window.location='diaryType?action=preSave&diaryTypeId=${diaryTypeList.diaryTypeId}'">修改</button>&nbsp;
+				<button class="btn btn-mini btn-danger" type="button">删除</button>
+				</td>
 			</tr>
 			</c:forEach>
 		</table>

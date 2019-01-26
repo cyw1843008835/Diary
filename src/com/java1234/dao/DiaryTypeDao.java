@@ -46,4 +46,34 @@ public class DiaryTypeDao {
 		return diaryTypeList;
 
 	}
+
+	public int diaryTypeAdd(Connection con, String typeName) throws Exception {
+		String sql = "insert into t_diarytype values(null,?)";
+		PreparedStatement preparedStatement = con.prepareStatement(sql);
+		preparedStatement.setString(1, typeName);
+		return preparedStatement.executeUpdate();
+
+	}
+
+	public int diaryTypeUpdate(Connection con, DiaryType diaryType) throws Exception {
+		String sql = "update t_diarytype set typeName=? where diaryTypeId=?";
+		PreparedStatement preparedStatement = con.prepareStatement(sql);
+		preparedStatement.setString(1, diaryType.getTypeName());
+		preparedStatement.setInt(2, diaryType.getDiaryTypeId());
+		return preparedStatement.executeUpdate();
+
+	}
+
+	public DiaryType diaryTyeShow(Connection con, String diaryTypeId) throws Exception {
+		String sql = "select * from t_diarytype where diaryTypeId=" + diaryTypeId;
+		PreparedStatement preparedStatement = con.prepareStatement(sql);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		DiaryType diaryType = new DiaryType();
+		if (resultSet.next()) {
+			diaryType.setTypeName(resultSet.getString("typeName"));
+			diaryType.setDiaryTypeId(resultSet.getInt("diaryTypeId"));
+		}
+		return diaryType;
+
+	}
 }

@@ -34,4 +34,15 @@ public class DiaryType {
 		this.diaryCount = diaryCount;
 	}
 
+	public DiaryType(int diaryTypeId, String typeName) {
+		super();
+		this.diaryTypeId = diaryTypeId;
+		this.typeName = typeName;
+	}
+
+	public DiaryType() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 }
