@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<script type="text/javascript">
+function checkForm(){
+	var nickName=document.getElementById("nickName").value;
+	if(nickName=="" || nickName==null){
+		document.getElementById("nickName").innerHTML="昵称不能为空！";
+		return false;
+	}
+	return true;
+}
+</script>
 <div class="data_list">
 	<div class="data_list_title">
 		<img src="${pageContext.request.contextPath }/images/user_edit_icon.png"/>
@@ -11,7 +21,7 @@
 			<img src="${currentUser.imageName }"/>
 		</div>
 		<div class="span8">
-			<form action="" method="post">
+			<form action="user?action=save" method="post" enctype="multipart/form-data" onsubmit="return checkForm()">
 				<table style="with:100%;">
 					<tr>
 						<td style="width:20%;">头像路径：</td>
